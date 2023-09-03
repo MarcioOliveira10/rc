@@ -18,6 +18,7 @@ public class InvoicesModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
+    private String code;
     private Date invoiceDate;
     private BigDecimal value;
     @Lob @Basic(fetch = FetchType.LAZY)
