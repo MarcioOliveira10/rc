@@ -1,4 +1,4 @@
-package com.repconnect.rc.models;
+package com.repconnect.rc.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name= "TB_SALES")
 @Getter
 @Setter
-public class SalesModel implements Serializable {
+public class Sales implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

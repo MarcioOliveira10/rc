@@ -1,39 +1,50 @@
 package com.repconnect.rc.controllers;
 
-import com.repconnect.rc.dtos.InvoiceRecordDto;
-import com.repconnect.rc.models.InvoicesModel;
-import com.repconnect.rc.repositories.InvoiceRepositories;
+import com.repconnect.rc.domain.Invoice;
+import com.repconnect.rc.dto.InvoiceRequestDTO;
+import com.repconnect.rc.dto.request.InvoiceResponseDTO;
+import com.repconnect.rc.service.InvoiceService;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+
 
 @RestController
 @RequestMapping
 public class InvoiceController {
-    @Autowired
-    private InvoiceRepositories invoiceRepositories;
-
+    public InvoiceController(InvoiceService invoiceService) {
+        this.invoiceService = invoiceService;
+    }
+    private final InvoiceService invoiceService;
     @PostMapping("/invoices")
-    public ResponseEntity<InvoicesModel> saveInvoice(@RequestBody @Valid InvoiceRecordDto invoiceRecordDto){
-        var invoicesModel = new InvoicesModel();
-        BeanUtils.copyProperties(invoiceRecordDto, invoicesModel);
-        return  ResponseEntity.status(HttpStatus.CREATED).body(invoiceRepositories.save(invoicesModel));
-    }
-    @GetMapping("/invoices")
-   public ResponseEntity<List<InvoicesModel>> getAllInvoices(){
-        return ResponseEntity.status(HttpStatus.OK).body(invoiceRepositories.findAll());
+    public ResponseEntity<Invoice> saveInvoice(@RequestBody @Valid InvoiceRequestDTO invoiceRequestDto){
+        return invoiceService.addInvoice(invoiceRequestDto);
     }
 
+    @GetMapping("/invoices/{uuid}")
+    public InvoiceResponseDTO findInvoiceById(@PathVariable @Valid UUID uuid) {
+        return invoiceService.findById(uuid);
+    }
+
+
+    @GetMapping("/invoices")
+   public ResponseEntity<List<InvoiceResponseDTO>> findAllInvoices(){
+        return ResponseEntity.status(HttpStatus.OK).body(invoiceService.findAll());
+    }
+
+    @PutMapping("/invoices/{uuid}")
+    public ResponseEntity<Object> update(@PathVariable(value = "uuid") UUID uuid,
+                                         @RequestBody InvoiceRequestDTO invoiceRequestDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(invoiceService.updateInvoice());
+    }
+/*
     @GetMapping("invoices/{id}")
     public ResponseEntity<Object> getOneInvoice(@PathVariable(value = "id")UUID id){
-        Optional<InvoicesModel> invoiceOptional = invoiceRepositories.findById(id);
+        Optional<Invoice> invoiceOptional = invoiceRepositories.findById(id);
         if(invoiceOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invoice not found.");
         }
@@ -42,7 +53,7 @@ public class InvoiceController {
     @PutMapping("/invoices/{id}")
     public ResponseEntity<Object> updateInvoice(@PathVariable(value = "id") UUID id,
                                                 @RequestBody InvoiceRecordDto invoiceRecordDto){
-        Optional<InvoicesModel> invoiceO = invoiceRepositories.findById(id);
+        Optional<Invoice> invoiceO = invoiceRepositories.findById(id);
         if(invoiceO.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invoice not found");
         }
@@ -53,7 +64,7 @@ public class InvoiceController {
 
     @DeleteMapping("/invoices/{id}")
     public ResponseEntity<Object> deleteInvoice(@PathVariable(value = "id") UUID id){
-        Optional<InvoicesModel> invoiceO = invoiceRepositories.findById(id);
+        Optional<Invoice> invoiceO = invoiceRepositories.findById(id);
         if(invoiceO.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invoice not found");
         }
@@ -61,7 +72,7 @@ public class InvoiceController {
         return ResponseEntity.status(HttpStatus.OK).body("Invoice deleted successfully.");
     }
 
-
+*/
 
 
 }
