@@ -2,18 +2,20 @@ package com.repconnect.rc.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
+
 @Entity
-@Table(name="TB_INVOICE_DATA")
 @Getter
+@Setter
+@Table(name="invoice_data")
 public class InvoiceData implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersion = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID uuid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String pdfLink;
     private String excelLink;
     private Date date;

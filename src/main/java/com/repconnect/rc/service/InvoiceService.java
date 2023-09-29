@@ -1,12 +1,15 @@
 package com.repconnect.rc.service;
 
 import com.repconnect.rc.domain.Invoice;
-import com.repconnect.rc.dto.InvoiceRequestDTO;
-import com.repconnect.rc.dto.request.InvoiceResponseDTO;
+import com.repconnect.rc.domain.InvoiceData;
+import com.repconnect.rc.dto.requests.InvoiceRequestDTO;
+import com.repconnect.rc.dto.responses.InvoiceResponseDTO;
+import com.repconnect.rc.mapper.InvoiceMapper;
+import com.repconnect.rc.repositories.InvoiceDataRepository;
 import com.repconnect.rc.repositories.InvoiceRepository;
+import com.repconnect.rc.util.InvoiceDataUtil;
 import com.repconnect.rc.util.InvoiceUtil;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,39 +18,32 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class InvoiceService {
-    public InvoiceService(InvoiceRepository invoiceRepository) {
+    public InvoiceService(InvoiceRepository invoiceRepository, InvoiceDataRepository invoiceDataRepository) {
         this.invoiceRepository = invoiceRepository;
+        this.invoiceDataRepository = invoiceDataRepository;
     }
 
     private final InvoiceRepository invoiceRepository;
+    private final InvoiceDataRepository invoiceDataRepository;
     @Autowired
     private InvoiceUtil invoiceUtil;
 
 
-/*
-public List<InvoiceResponseDTO> findAll() {
-        List<Invoice> invoices = invoiceRepository.findAll();
-List<InvoiceResponseDTO> invoiceResponseDTOs = invoices.stream()
-                .map(invoice -> {
-                    InvoiceResponseDTO dto = new InvoiceResponseDTO(
-                            invoice.getCode(),
-                            invoice.getInvoiceDate(),
-                            invoice.getValue(),
-                            invoice.getObservation(),
-                            invoice.getDueDate(),
-                            invoice.getInvoiceData());
-                    BeanUtils.copyProperties(invoice, dto);
-                    return dto;
-                })
-                .collect(Collectors.toList());
+    @Transactional
+    public ResponseEntity<InvoiceResponseDTO> addInvoice(InvoiceRequestDTO invoiceRequest) {
+        InvoiceData invoiceData = InvoiceDataUtil.createInvoiceData(invoiceRequest);
+        Invoice invoice = InvoiceUtil.createInvoice(invoiceRequest, invoiceData);
 
-        return invoiceResponseDTOs;
-    }*/
+        InvoiceData invoiceDataSave = invoiceDataRepository.save(invoiceData);
+        Invoice invoiceSave = invoiceRepository.save(invoice);
+
+        InvoiceResponseDTO invoiceResponse = InvoiceMapper.toInvoiceResponse(invoiceSave);
+        return ResponseEntity.status(HttpStatus.CREATED).body(invoiceResponse);
+    }
 
 
     public List<InvoiceResponseDTO> findAll() {
@@ -57,19 +53,12 @@ List<InvoiceResponseDTO> invoiceResponseDTOs = invoices.stream()
                 .collect(Collectors.toList());
     }
 
-    @Transactional
-    public ResponseEntity<Invoice> addInvoice(InvoiceRequestDTO invoiceRequestDto) {//add ao banco uma nova invoice
-        Invoice invoice = new Invoice();
-        BeanUtils.copyProperties(invoiceRequestDto, invoice);
-        return ResponseEntity.status(HttpStatus.CREATED).body(invoiceRepository.save(invoice));
-    }
-
-
-    public InvoiceResponseDTO findById(UUID uuid) { //Busca uma fatura por id
-        Optional<Invoice> invoiceOptional = invoiceRepository.findById(uuid);
+    public InvoiceResponseDTO findById(Integer id) { //Busca uma fatura por id
+        Optional<Invoice> invoiceOptional = invoiceRepository.findById(id);
         if (invoiceOptional.isPresent()) {
             Invoice invoice = invoiceOptional.get();
             return new InvoiceResponseDTO(
+                    invoice.getId(),
                     invoice.getCode(),
                     invoice.getInvoiceDate(),
                     invoice.getValue(),
@@ -79,20 +68,34 @@ List<InvoiceResponseDTO> invoiceResponseDTOs = invoices.stream()
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invoice Not Found");
         }
+
     }
 
+
+
+
 /*
+
+  public InvoiceResponseDTO updateInvoice(InvoiceResponseDTO invoiceResponseDTO, String code){
+        Invoice existInvoice = invoiceRepository.findB
+
+    }
 
   public Invoice findById(UUID uuid){
         return invoiceRepository.findById(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invoice Not Found"));
     }
 
-
-
     @Transactional
     public void deleteInvoice(UUID uuid){
         invoiceRepository.deleteById(uuid);
+    }
+
+
+      public ResponseEntity<Invoice> addInvoice(InvoiceRequestDTO invoiceRequestDto) {//add ao banco uma nova invoice
+        Invoice invoice = new Invoice();
+        BeanUtils.copyProperties(invoiceRequestDto, invoice);
+        return ResponseEntity.status(HttpStatus.CREATED).body(invoiceRepository.save(invoice));
     }
 
 */

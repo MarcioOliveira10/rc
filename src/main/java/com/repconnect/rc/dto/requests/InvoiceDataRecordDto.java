@@ -1,4 +1,4 @@
-package com.repconnect.rc.dto;
+package com.repconnect.rc.dto.requests;
 
 import java.util.Date;
 

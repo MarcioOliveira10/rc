@@ -1,8 +1,8 @@
 package com.repconnect.rc.controllers;
 
-import com.repconnect.rc.domain.Invoice;
-import com.repconnect.rc.dto.InvoiceRequestDTO;
-import com.repconnect.rc.dto.request.InvoiceResponseDTO;
+
+import com.repconnect.rc.dto.requests.InvoiceRequestDTO;
+import com.repconnect.rc.dto.responses.InvoiceResponseDTO;
 import com.repconnect.rc.service.InvoiceService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 
 @RestController
@@ -19,29 +18,45 @@ public class InvoiceController {
     public InvoiceController(InvoiceService invoiceService) {
         this.invoiceService = invoiceService;
     }
+
     private final InvoiceService invoiceService;
+
     @PostMapping("/invoices")
-    public ResponseEntity<Invoice> saveInvoice(@RequestBody @Valid InvoiceRequestDTO invoiceRequestDto){
-        return invoiceService.addInvoice(invoiceRequestDto);
+    public ResponseEntity<InvoiceResponseDTO> saveInvoice(@RequestBody InvoiceRequestDTO invoiceRequest){
+        return invoiceService.addInvoice(invoiceRequest);
     }
 
-    @GetMapping("/invoices/{uuid}")
-    public InvoiceResponseDTO findInvoiceById(@PathVariable @Valid UUID uuid) {
-        return invoiceService.findById(uuid);
+
+    @GetMapping("/invoices/{id}")
+    public InvoiceResponseDTO findInvoiceById(@PathVariable @Valid Integer id) {
+        return invoiceService.findById(id);
     }
 
 
     @GetMapping("/invoices")
-   public ResponseEntity<List<InvoiceResponseDTO>> findAllInvoices(){
+    public ResponseEntity<List<InvoiceResponseDTO>> findAllInvoices() {
         return ResponseEntity.status(HttpStatus.OK).body(invoiceService.findAll());
     }
 
-    @PutMapping("/invoices/{uuid}")
-    public ResponseEntity<Object> update(@PathVariable(value = "uuid") UUID uuid,
-                                         @RequestBody InvoiceRequestDTO invoiceRequestDTO){
+
+
+
+/*
+
+ @PutMapping("/invoices/{code}")
+    public ResponseEntity<Object> update(@PathVariable(value = "code") String code,
+                                         @RequestBody InvoiceRequestDTO invoiceRequestDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(invoiceService.updateInvoice());
     }
-/*
+
+
+
+    @PostMapping("/invoices")
+    public ResponseEntity<Invoice> saveInvoice(@RequestBody @Valid InvoiceRequestDTO invoiceRequestDto) {
+        return invoiceService.addInvoice(invoiceRequestDto);
+    }
+------------------------------------------------------------------------------------------------
+
     @GetMapping("invoices/{id}")
     public ResponseEntity<Object> getOneInvoice(@PathVariable(value = "id")UUID id){
         Optional<Invoice> invoiceOptional = invoiceRepositories.findById(id);
