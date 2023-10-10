@@ -1,0 +1,11 @@
+CREATE TABLE `sales` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
+    `value` DECIMAL NOT NULL,
+    `sale_date` DATE,
+    `observation` TEXT,
+    `customer_ID` INT UNIQUE,
+    `represented_ID` INT UNIQUE,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+);

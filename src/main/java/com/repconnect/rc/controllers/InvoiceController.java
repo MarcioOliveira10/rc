@@ -1,8 +1,8 @@
 package com.repconnect.rc.controllers;
 
 
-import com.repconnect.rc.dto.requests.InvoiceRequestDTO;
-import com.repconnect.rc.dto.responses.InvoiceResponseDTO;
+import com.repconnect.rc.dto.requests.InvoiceRequest;
+import com.repconnect.rc.dto.responses.InvoiceResponse;
 import com.repconnect.rc.service.InvoiceService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -22,19 +22,20 @@ public class InvoiceController {
     private final InvoiceService invoiceService;
 
     @PostMapping("/invoices")
-    public ResponseEntity<InvoiceResponseDTO> saveInvoice(@RequestBody InvoiceRequestDTO invoiceRequest){
+    public ResponseEntity<InvoiceResponse> saveInvoice(@RequestBody InvoiceRequest invoiceRequest){
         return invoiceService.addInvoice(invoiceRequest);
     }
 
 
+
     @GetMapping("/invoices/{id}")
-    public InvoiceResponseDTO findInvoiceById(@PathVariable @Valid Integer id) {
+    public InvoiceResponse findInvoiceById(@PathVariable @Valid Integer id) {
         return invoiceService.findById(id);
     }
 
 
     @GetMapping("/invoices")
-    public ResponseEntity<List<InvoiceResponseDTO>> findAllInvoices() {
+    public ResponseEntity<List<InvoiceResponse>> findAllInvoices() {
         return ResponseEntity.status(HttpStatus.OK).body(invoiceService.findAll());
     }
 

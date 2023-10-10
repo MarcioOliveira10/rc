@@ -7,6 +7,7 @@ CREATE TABLE `invoices` (
     `observation` TEXT,
     `due_date` DATE,
     `invoice_data_ID` INTEGER,
+    `sale_ID` INTEGER,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`invoice_data_ID`) REFERENCES `invoice_data`(`id`)
 );

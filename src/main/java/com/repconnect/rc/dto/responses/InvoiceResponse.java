@@ -1,12 +1,13 @@
 package com.repconnect.rc.dto.responses;
 
 import com.repconnect.rc.domain.InvoiceData;
+import com.repconnect.rc.domain.Sales;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-public record InvoiceResponseDTO(
+public record InvoiceResponse(
         Integer id,
         @NotNull
         String code,
@@ -15,7 +16,8 @@ public record InvoiceResponseDTO(
         BigDecimal value,
         String observation,
         Date dueDate,
-        InvoiceData invoiceData
+        InvoiceData invoiceData,
+        Sales sales
         ) {
 
         }
