@@ -6,14 +6,13 @@ import com.repconnect.rc.domain.Sales;
 import com.repconnect.rc.dto.requests.InvoiceRequest;
 import com.repconnect.rc.dto.responses.InvoiceResponse;
 import com.repconnect.rc.repositories.SaleRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class InvoiceUtil {
-    @Autowired
-    private static SaleRepository saleRepository;
 
     public InvoiceResponse convertToInvoiceResponseDTO(Invoice invoice) {
         InvoiceResponse dto = new InvoiceResponse(

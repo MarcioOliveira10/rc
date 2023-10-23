@@ -8,14 +8,17 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name= "TB_PHONES")
+@Table(name= "TB_CUSTOMERS")
 @Getter
 @Setter
-public class Phones implements Serializable {
+public class Customer implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
-    private String phoneNumber;
     private String name;
+    private String email;
+    private String nif;
+
 }

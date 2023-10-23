@@ -24,20 +24,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class InvoiceService {
-    public InvoiceService(InvoiceRepository invoiceRepository, InvoiceDataRepository invoiceDataRepository, SaleRepository saleRepository,InvoiceUtil invoiceUtil) {
-        this.invoiceRepository = invoiceRepository;
-        this.invoiceDataRepository = invoiceDataRepository;
-        this.saleRepository = saleRepository;
-        this.invoiceUtil = invoiceUtil;
-    }
 
     private final InvoiceRepository invoiceRepository;
     private final InvoiceDataRepository invoiceDataRepository;
     private final InvoiceUtil invoiceUtil;
     private final SaleRepository saleRepository;
 
-
-
+    public InvoiceService(InvoiceRepository invoiceRepository, InvoiceDataRepository invoiceDataRepository, InvoiceUtil invoiceUtil, SaleRepository saleRepository) {
+        this.invoiceRepository = invoiceRepository;
+        this.invoiceDataRepository = invoiceDataRepository;
+        this.invoiceUtil = invoiceUtil;
+        this.saleRepository = saleRepository;
+    }
 
 
     @Transactional

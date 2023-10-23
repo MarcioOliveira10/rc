@@ -7,30 +7,26 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.UUID;
+
 
 @Entity
-@Table(name= "sales")
+@Table(name= "addresses")
 @Getter
 @Setter
-public class Sales implements Serializable {
+public class Address implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private BigDecimal value;
-    private Date saleDate;
-    private String observation;
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "represented_id", referencedColumnName = "Id")
-    private Represented represented;
+    private String street;
+    private String number;
+    private String city;
+    private String zip_code;
+    private String complement;
     @CreationTimestamp
     private Timestamp createdAt;
     @UpdateTimestamp
     private Timestamp updatedAt;
-
 
 }

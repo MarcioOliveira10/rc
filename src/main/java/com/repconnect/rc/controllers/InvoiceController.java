@@ -15,11 +15,12 @@ import java.util.List;
 @RestController
 @RequestMapping
 public class InvoiceController {
+
+    private final InvoiceService invoiceService;
+
     public InvoiceController(InvoiceService invoiceService) {
         this.invoiceService = invoiceService;
     }
-
-    private final InvoiceService invoiceService;
 
     @PostMapping("/invoices")
     public ResponseEntity<InvoiceResponse> saveInvoice(@RequestBody InvoiceRequest invoiceRequest){
