@@ -1,8 +1,8 @@
 package com.repconnect.rc.controllers;
 
-import com.repconnect.rc.dto.requests.RepresentedRequest;
-import com.repconnect.rc.dto.responses.RepresentedResponse;
-import com.repconnect.rc.service.RepresentedService;
+import com.repconnect.rc.represented.RepresentedRequest;
+import com.repconnect.rc.represented.RepresentedResponse;
+import com.repconnect.rc.represented.RepresentedService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

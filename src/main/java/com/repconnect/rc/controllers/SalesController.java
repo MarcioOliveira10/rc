@@ -1,8 +1,8 @@
 package com.repconnect.rc.controllers;
 
-import com.repconnect.rc.dto.requests.SaleRequest;
-import com.repconnect.rc.dto.responses.SaleResponse;
-import com.repconnect.rc.service.SaleService;
+import com.repconnect.rc.sale.SaleRequest;
+import com.repconnect.rc.sale.SaleResponse;
+import com.repconnect.rc.sale.SaleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

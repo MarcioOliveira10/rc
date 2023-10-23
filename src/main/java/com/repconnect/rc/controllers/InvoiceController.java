@@ -1,9 +1,9 @@
 package com.repconnect.rc.controllers;
 
 
-import com.repconnect.rc.dto.requests.InvoiceRequest;
-import com.repconnect.rc.dto.responses.InvoiceResponse;
-import com.repconnect.rc.service.InvoiceService;
+import com.repconnect.rc.invoice.InvoiceRequest;
+import com.repconnect.rc.invoice.InvoiceResponse;
+import com.repconnect.rc.invoice.InvoiceService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
