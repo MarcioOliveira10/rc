@@ -1,10 +1,7 @@
 package com.repconnect.rc.invoice;
 
-import com.repconnect.rc.invoice.Invoice;
 import com.repconnect.rc.invoiceData.InvoiceData;
-import com.repconnect.rc.sale.Sales;
-import com.repconnect.rc.invoice.InvoiceRequest;
-import com.repconnect.rc.invoice.InvoiceResponse;
+import com.repconnect.rc.sale.Sale;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +21,7 @@ public class InvoiceUtil {
         BeanUtils.copyProperties(invoice, dto);
         return dto;
     }
-    public static Invoice createInvoice(InvoiceRequest invoiceRequest, InvoiceData invoiceData, Sales existingSales) {
+    public static Invoice createInvoice(InvoiceRequest invoiceRequest, InvoiceData invoiceData, Sale existingSale) {
         Invoice invoice = new Invoice();
         invoice.setCode(invoiceRequest.code());
         invoice.setInvoiceDate(invoiceRequest.invoiceDate());
@@ -32,7 +29,7 @@ public class InvoiceUtil {
         invoice.setObservation(invoiceRequest.observation());
         invoice.setDueDate(invoiceRequest.dueDate());
         invoice.setInvoiceData(invoiceData);
-        invoice.setSales(existingSales);
+        invoice.setSales(existingSale);
         return invoice;
     }
 

@@ -1,14 +1,12 @@
 package com.repconnect.rc.sale;
 
 
-import com.repconnect.rc.sale.Sales;
-import com.repconnect.rc.sale.SaleRequest;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SaleUtil {
-    public static Sales createSale(SaleRequest saleRequest){
-        Sales sale = new Sales();
+    public static Sale createSale(SaleRequest saleRequest){
+        Sale sale = new Sale();
         sale.setValue(saleRequest.value());
         sale.setSaleDate(saleRequest.saleDate());
         sale.setObservation(saleRequest.observation());

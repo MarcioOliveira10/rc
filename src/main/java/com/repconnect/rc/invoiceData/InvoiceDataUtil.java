@@ -4,14 +4,19 @@ import com.repconnect.rc.invoiceData.InvoiceData;
 import com.repconnect.rc.invoice.InvoiceRequest;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class InvoiceDataUtil {
-    public static InvoiceData createInvoiceData(InvoiceRequest invoiceRequest) {
+    public static Optional<InvoiceData> createInvoiceData(InvoiceRequest invoiceRequest) {
+        if(invoiceRequest.invoiceData() == null){
+            return Optional.empty();
+        }
         InvoiceData invoiceData = new InvoiceData();
         invoiceData.setId(invoiceRequest.id());
         invoiceData.setPdfLink(invoiceRequest.invoiceData().getPdfLink());
         invoiceData.setExcelLink(invoiceRequest.invoiceData().getExcelLink());
         invoiceData.setDate(invoiceRequest.invoiceData().getDate());
-        return invoiceData;
+        return Optional.of(invoiceData);
     }
 }

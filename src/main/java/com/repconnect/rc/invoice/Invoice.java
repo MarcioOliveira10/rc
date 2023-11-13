@@ -1,7 +1,7 @@
 package com.repconnect.rc.invoice;
 
 import com.repconnect.rc.invoiceData.InvoiceData;
-import com.repconnect.rc.sale.Sales;
+import com.repconnect.rc.sale.Sale;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class Invoice implements Serializable {
     private InvoiceData invoiceData;
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="sale_ID", referencedColumnName = "Id" )
-    private Sales sales;
+    private Sale sales;
 
 
 }

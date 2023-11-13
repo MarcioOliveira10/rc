@@ -1,7 +1,7 @@
 package com.repconnect.rc.invoice;
 
 import com.repconnect.rc.invoiceData.InvoiceData;
-import com.repconnect.rc.sale.Sales;
+import com.repconnect.rc.sale.Sale;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
@@ -17,7 +17,7 @@ public record InvoiceResponse(
         String observation,
         Date dueDate,
         InvoiceData invoiceData,
-        Sales sales
+        Sale sales
         ) {
 
         }

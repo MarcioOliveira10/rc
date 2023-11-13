@@ -13,7 +13,7 @@ public class SaleService {
     }
 
     public ResponseEntity<SaleResponse> addSale(SaleRequest saleRequest) {
-        Sales sale = SaleUtil.createSale(saleRequest);
+        Sale sale = SaleUtil.createSale(saleRequest);
         var saleSaved = saleRepository.save(sale);
 
         SaleResponse saleResponse = SaleMapper.toSaleResponse(saleSaved);
