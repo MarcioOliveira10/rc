@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class InvoiceUtil {
 
-    public InvoiceResponse convertToInvoiceResponseDTO(Invoice invoice) {
-        InvoiceResponse dto = new InvoiceResponse(
+    public InvoiceResponse convertToInvoiceResponse(Invoice invoice) {
+        InvoiceResponse response = new InvoiceResponse(
                 invoice.getId(),
                 invoice.getCode(),
                 invoice.getInvoiceDate(),
@@ -18,8 +18,8 @@ public class InvoiceUtil {
                 invoice.getDueDate(),
                 invoice.getInvoiceData(),
                 invoice.getSales());
-        BeanUtils.copyProperties(invoice, dto);
-        return dto;
+        BeanUtils.copyProperties(invoice, response);
+        return response;
     }
     public static Invoice createInvoice(InvoiceRequest invoiceRequest, InvoiceData invoiceData, Sale existingSale) {
         Invoice invoice = new Invoice();

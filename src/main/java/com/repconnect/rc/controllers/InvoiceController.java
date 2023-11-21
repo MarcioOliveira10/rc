@@ -23,7 +23,7 @@ public class InvoiceController {
     }
 
     @PostMapping("/invoices")
-    public ResponseEntity<InvoiceResponse> saveInvoice(@RequestBody InvoiceRequest invoiceRequest){
+    public InvoiceResponse saveInvoice(@RequestBody InvoiceRequest invoiceRequest){
         return invoiceService.addInvoice(invoiceRequest);
     }
 

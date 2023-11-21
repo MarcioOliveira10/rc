@@ -1,8 +1,8 @@
 package com.repconnect.rc.invoice;
 
+import com.repconnect.rc.exceptions.RecordNotFoundException;
 import com.repconnect.rc.invoiceData.InvoiceData;
 import com.repconnect.rc.sale.Sale;
-import com.repconnect.rc.invoiceData.InvoiceDataRepository;
 import com.repconnect.rc.sale.SaleRepository;
 import com.repconnect.rc.invoiceData.InvoiceDataUtil;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,6 +27,8 @@ public class InvoiceService {
     @Autowired
     private SaleRepository saleRepository;
 
+
+
     public InvoiceService() {
     }
 
@@ -49,7 +51,7 @@ public class InvoiceService {
     public List<InvoiceResponse> findAll() {
         List<Invoice> invoices = invoiceRepository.findAll();
         return invoices.stream() // Convertendo a lista de Invoice para uma lista de InvoiceResponseDTO
-                .map(invoiceUtil::convertToInvoiceResponseDTO)
+                .map(invoiceUtil::convertToInvoiceResponse)
                 .collect(Collectors.toList());
     }
 
@@ -67,7 +69,8 @@ public class InvoiceService {
                     invoice.getInvoiceData(),
                     invoice.getSales());
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invoice Not Found");
+            //throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invoice Not Found");
+            throw new RecordNotFoundException(id);
         }
 
     }
